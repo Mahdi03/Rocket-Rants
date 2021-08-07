@@ -1,0 +1,72 @@
+/************************************************For chat.html******************************************************/
+
+
+/*Main place to display all messages*/
+
+#chatbox {
+    background-color: black;
+    color: white;
+}
+
+
+/*Any text bubble*/
+
+.text {
+    margin: 2px;
+    padding: 10px;
+    max-width: 60%;
+    border-radius: 10px;
+}
+
+
+/*remove space from <p> elements inside of the text bubble*/
+
+.text p {
+    margin: 0;
+    word-wrap: break-word;
+}
+
+
+/*Move all of the texts on the right to the right*/
+
+.right {
+    float: right;
+    clear: both;
+    background-color: rgb(33, 57, 194);
+}
+
+
+/*Move all of the texts on the left to the left*/
+
+.left {
+    float: left;
+    clear: both;
+    background-color: rgb(34, 36, 51);
+}
+
+
+/*Work on fitting the image into the text bubble*/
+
+img {
+    max-width: 90%;
+}
+
+
+/*Style any messages that are not texts, like hangouts calls or gc renames*/
+
+.info {
+    text-align: center;
+    clear: both;
+}
+
+
+/*Give everyone their respective colors*/
+
+.localUser {
+    background-color: rgb(231, 173, 255);
+    color: black;
+}
+
+.remoteUser {
+    background-color: turquoise;
+}
