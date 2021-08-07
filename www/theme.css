@@ -17,6 +17,8 @@ header .pageTitle {
     /*font-family: 'Chewy', cursive;*/
     color: #0353ff;
     font-family: 'Verdana', cursive;
+    margin-bottom: 0;
+    align-items:center;
 }
 
 header .pageTitleIcon {
@@ -31,6 +33,10 @@ header .pageTitleIcon {
 /************************************************For index.html****************************************************/
 
 
+#tagline {
+    margin:auto;
+    text-align: center;
+}
 
 form {
     margin: 0.5rem;
@@ -109,7 +115,6 @@ input:checked + .off ~ .switch-selection{
 .start {
     margin:auto;
     font-size: 16px;
-    font-family: 'Times New Roman', Times, serif;
     font-weight: bolder;
     text-align: center;
     border-radius: 4px;
