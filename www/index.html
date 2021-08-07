@@ -63,7 +63,7 @@
         document.addEventListener("deviceready", () => {
             //All JS logic goes in device ready event
             var socket = io.connect("url to server");
-
+            //Use socket-io rooms
             //How to send a message
             var message = ""; //Later switch-case for content media and deliver media thru socket to server either text or binary data
             //Be sure to sanitize messages being sent to server
@@ -73,6 +73,9 @@
 
 
             socket.on("message", (messageFromServer) => {
+                if (!socket.connected) {
+                    //The user is offline now, when the internet works again all socket instances will try to execute buffered up code
+                }
                 //Message received - filter type of message and show it accordingly onto page
                 //Show messageFromServer on page and scroll to bottom
                 //Be sure to sanitize message for 
