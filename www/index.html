@@ -30,7 +30,7 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
@@ -53,12 +53,82 @@
 
 
     <header>
-        <h1 class="pageTitle"><img src="" alt="" class="pageTitleIcon">&nbsp;&nbsp;<span>Rocket Rants</span></h1>
+        <h1 class="pageTitle"><img src="../img/small_left_white.png" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
     </header>
     <main>
-        <!--Insert input form here-->
+        <form>
+            <div class="container">
+                <input class="roleRadio" type="radio" name="switch" id="on" checked/>
+                <label for="on" class="switch-label on">Rant</label>
+                
+                <input class="roleRadio" type="radio" name="switch" id="off" />
+                <label for="off" class="switch-label off">Listen</label>
+              
+            <div class="switch-selection"></div>
+            </div><br><br>
+            <input class="nonRole" style="float:left; transform: scale(1.2);" type="checkbox" name="clean" checked>
+            <label for="clean">&nbsp;Clean filter</label>
+            <p>All fields are optional.</p>
+            <label>Screen Name:</label><br>
+            <input class="nonRole" type="text"><br>
+            <label>Age:</label><br>
+            <input class="ageInput nonRole" type="number" placeholder="min">
+            <label> to:</label></nobr>
+            <input class="ageInput ageInput2 nonRole" type="number" placeholder="max"><br><br>
+            <label>Gender:</label><br>
+            <select>
+                <option value="0"></option>
+                <option value="1">Female</option>
+                <option value="2">Male</option>
+                <option value="3">Non-binary</option>
+                <option value="4">Transgender</option>
+                <option value="5">Questioning</option>
+            </select><br><br>
+            <label">Pronouns:</label><br>
+            <input class="nonRole" style="z-index: 2;" type="text"><br>
+            <label">Race/Ethnicity:</label><br>
+            <select>
+                <option value="0"></option>
+                <option value="1">American Indian or Alaska Native</option>
+                <option value="2">Asian</option>
+                <option value="3">Black or African American</option>
+                <option value="4">Hispanic or Latino</option>
+                <option value="5">Native Hawaiian or Other Pacific Islander</option>
+                <option value="6">White</option>
+            </select><br><br>
+            <button type="button" class="nonRole start" id="startButton" value="Start Chat">&nbsp;&nbsp;Start Chat&nbsp;&nbsp;</button>
+        </form>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <p style="font-size: 20px;">Connecting you to a listener...</p>
+              <img src="../img/loading.gif" style="max-width: 50%;"/>
+            </div>
+          </div>
+        <img id="leftrocket" src="../img/big_both_white.png"/>
     </main>
-    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+    <script>
+        let startButtonElem = document.getElementById("startButton");
+        let loadingModalElem = document.getElementById("myModal");
+        let closeButtonElem = document.getElementsByClassName("close")[0];
+
+        startButtonElem.onclick = function() {
+            loadingModalElem.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+            closeButtonElem.onclick = function() {
+            loadingModalElem.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == loadingModalElem) {
+            loadingModalElem.style.display = "none";
+            }
+        }
+    </script>
+    <!-- <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
     <script>
         document.addEventListener("deviceready", () => {
             //All JS logic goes in device ready event
@@ -83,7 +153,7 @@
         });
     </script>
     <script src="cordova.js"></script>
-    <!--Required for Cordova, ignore warnings in web console-->
+    Required for Cordova, ignore warnings in web console -->
 </body>
 
 </html>

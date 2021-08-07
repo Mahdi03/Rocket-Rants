@@ -3,17 +3,20 @@
 
 /*Put fonts and other color schemes here (a light and dark mode on <body>?)*/
 
+main {
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 /*For main headers*/
 
 header .pageTitle {
     text-align: center;
-    font-size: 50px;
+    font-size: 33px;
     display: flex;
     justify-content: center;
     /*font-family: 'Chewy', cursive;*/
-    color: rgb(11, 111, 9);
-    font-family: 'Londrina Shadow', cursive;
+    color: #0353ff;
+    font-family: 'Verdana', cursive;
 }
 
 header .pageTitleIcon {
@@ -27,6 +30,141 @@ header .pageTitleIcon {
 
 /************************************************For index.html****************************************************/
 
+
+
+form {
+    margin: 0.5rem;
+    padding: 1.5rem;
+    background-color: #181c25;
+    border-radius: 6px;
+
+}
+
+
+
+.nobreak {
+    white-space: nowrap;
+}
+
+input {
+    display:none;
+}
+
+.nonRole { 
+    display:block;
+}
+.ageInput {
+    width: 15%;
+    display: inline;
+}
+.ageInput2 {
+    float:none;
+}
+.container{
+    text-align: center;
+    position: relative;
+    margin: auto;
+    background: #757575;
+    float: left;
+    border-radius: 3px;
+    box-shadow: 1px 1px 2px #757575;
+    width: 136px;
+}
+.switch-label{
+    position: relative;
+    border-radius: 3px;
+    color: #fff;
+    padding: 4px;
+    float: left;
+    width: 60px;
+    color: black;
+    height: 16px;
+    z-index: 2;
+    transition: all .3s ease-out;
+    cursor: pointer;
+}
+input:checked + .switch-label{
+    color: #fff;
+    font-weight: bolder;
+}
+
+.switch-selection{
+    position: absolute;
+    width: 60px;
+    top: 0;
+    height: 16px;
+    left: 0;
+    padding: 4px;
+    z-index: 1;
+    background: #0353ff;
+    box-shadow: 1px 0px 4px #212121;
+    transition: left 0.2s ease-out;
+}
+  
+input:checked + .off ~ .switch-selection{
+    box-shadow: -1px 0px 4px #212121;
+    left: 68px;
+}
+
+.start {
+    margin:auto;
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bolder;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 1px 1px 2px #757575;
+    padding: 6px;
+    background: #0353ff;
+    border: none;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    padding-top: 150px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    text-align: center;
+}
+  
+.modal-content {
+    border-radius: 4px;
+    color: black;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+  
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#leftrocket {
+    position: fixed;
+    z-index: 0;
+    max-width: 40%;
+    top: 300px;
+    right: 40px;
+}
 
 /************************************************For chat.html*****************************************************/
 
