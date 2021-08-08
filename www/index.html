@@ -196,7 +196,7 @@
             <!--Main Textbox-->
             <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
             <!--Send button on right-->
-            <button>Send</button>
+            <button id="sendButton">Send</button>
         </div>
         <script>
             function addTextToScreen(message, localOrRemote) {
@@ -232,6 +232,11 @@
                     behavior: "smooth"
                 });
             }
+            var sendButton = document.querySelector("#sendButton");
+            sendButton.onclick = () => {
+                var inputMessage = document.querySelector("#inputMessage");
+                addTextToScreen(inputMessage.innerHTML, "local");
+            };
         </script>
     </main>
     <!-- <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
@@ -260,6 +265,8 @@
     </script>
     <script src="cordova.js"></script>
     Required for Cordova, ignore warnings in web console -->
+    <script src="cordova.js"></script>
+    <!--Required for Cordova, ignore warnings in web console -->
 </body>
 
 </html>
