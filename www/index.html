@@ -24,7 +24,7 @@
         <script src="js/index.js"></script>-->
 
     <header>
-        <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
+        <h1 class="pageTitle"><img src="img/rocketloading.svg" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
         <p class="tagline">a <i>space</i> of understanding</p>
         <!-- <div id="settingsBar">
             <button id="downloadChatButton">Save chat</button>
@@ -96,7 +96,7 @@
             <label for="clean"><input style="float:left; transform: scale(1.2);" type="checkbox" name="clean" checked />&nbsp;Clean filter</label>
             <p>All fields are optional.</p>
             <label for="screenName">Screen Name:</label><br />
-            <input class="nonRole" name="screenName" type="text"><br />
+            <input class="nonRole" name="screenName" type="text"><br /><br>
             <label for="ageInputMin">Age:</label><br>
             <input class="ageInput nonRole" name="ageInputMin" type="number" placeholder="min">
             <label for="ageInputMax"> to:</label>
@@ -113,7 +113,7 @@
             </datalist>
             <br /><br />
             <label for="pronouns">Pronouns:</label><br />
-            <input name="pronouns" type="text" /><br />
+            <input name="pronouns" type="text" /><br /><br>
             <label for="raceAndEthnicity">Race/Ethnicity:</label><br />
             <input list="raceAndEthnicityList" id="raceAndEthnicity" name="raceAndEthnicity" />
             <datalist id="raceAndEthnicityList">
@@ -127,7 +127,7 @@
             </datalist><br /><br />
             <button type="button" class="start" id="startButton" value="Start Chat">&nbsp;&nbsp;Start Chat&nbsp;&nbsp;</button>
         </form>
-        <img id="leftrocket" src="img/big_both_white.png" />
+        <img id="rocketsimg" src="img/big_both_white.png" />
 
         <div id="myModal" class="modal">
             <div class="modal-content">
@@ -141,11 +141,11 @@
     <main id="chatApp">
         <section class="msger">
             <header class="messenger-header">
-                <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
+                <h1 class="pageTitle"><img src="img/rocketloading.svg" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
                 <p class="tagline">a <i>space</i> of understanding</p>
                 <div id="settingsBar">
-                    <button id="downloadChatButton" onclick="window.print();">Save chat</button>
-                    <button id="disconnectChatButton" style="float:right;">Leave chat</button>
+                    <button id="downloadChatButton" onclick="window.print();" alt="save chat"><img src="img/download.png"></button>
+                    <button id="disconnectChatButton" alt="leave chat"><img src="img/door.png"></button>
                 </div>
             </header>
 
