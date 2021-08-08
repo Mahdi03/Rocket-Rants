@@ -5,7 +5,8 @@
  * between the server and the client-side (which will be apache cordova in the www/
  * folder)
  */
-/* We probs don't need express because it's just a message server
+/* We probs don't need express because it's just a message server */
+
 const express = require('express'); //npm install express
 const PORT = process.env.PORT || 5000;
 const path = require("path"); //Maybe to add paths?
@@ -14,21 +15,24 @@ const app = express();
 //Might need if we wanna render HTML?
 app.engine('html', require('ejs').renderFile); //Used to render HTML - npm install html
 app.engine('css', require('ejs').renderFile); //Used to render CSS - npm install css
-app.use(express.static(path.join(__dirname, 'public'))); //Used to find "public" folder outside of folder of this script and serve CSS/JS files
+app.use(express.static(path.join(__dirname, 'www'))); //Used to find "public" folder outside of folder of this script and serve CSS/JS files
 app.use(
     express.urlencoded({
         extended: true
     })
 );
 
-app.listen(PORT, () => {
-    console.log(`Success, listening on port: ${PORT}`);
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + 'www/index.html');
 });
-*/
+
+/*app.listen(PORT, () => {
+    console.log(`Success, listening on port: ${PORT}`);
+});*/
 
 //////ORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 const http = require('http');
-const server = http.createServer();
+const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 io.on("connection", (socket) => {

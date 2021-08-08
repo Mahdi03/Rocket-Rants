@@ -55,6 +55,10 @@
     <header>
         <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
         <p id="tagline">a <i>space</i> of understanding</p>
+        <div id="settingsBar">
+            <button id="downloadChatButton">Save chat</button>
+            <button id="disconnectChatButton">Leave chat</button>
+        </div>
     </header>
     <main id="initialPage">
         <form>
@@ -194,7 +198,11 @@
             <!--Main Textbox-->
             <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
             <!--Send button on right-->
+<<<<<<< HEAD
             <button class="start">Send</button>
+=======
+            <div id="sendButton" class="start">Send</div>
+>>>>>>> c49492857a93b9b33437fc19a954516a52d97b9b
         </div>
         <script>
             function addTextToScreen(message, localOrRemote) {
@@ -230,6 +238,15 @@
                     behavior: "smooth"
                 });
             }
+            var sendButton = document.querySelector("#sendButton");
+            sendButton.onclick = (event) => {
+                event.preventDefault();
+                var inputMessage = document.querySelector("#inputMessage");
+                addTextToScreen(inputMessage.value, "local");
+            };
+            sendButton.addEventListener("mousedown", (event) => {
+                event.preventDefault(); //Used to make sure button doesn't steal focus from textarea and that keyboard doesn't disappear
+            });
         </script>
     </main>
     <!-- <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
@@ -258,6 +275,8 @@
     </script>
     <!-- <script src="cordova.js"></script>
     Required for Cordova, ignore warnings in web console -->
+    <script src="cordova.js"></script>
+    <!--Required for Cordova, ignore warnings in web console -->
 </body>
 
 </html>

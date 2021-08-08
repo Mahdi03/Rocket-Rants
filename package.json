@@ -5,7 +5,8 @@
     "description": "",
     "main": "App.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node App.js"
     },
     "keywords": [
         "ecosystem:cordova"
@@ -26,6 +27,9 @@
         ]
     },
     "dependencies": {
+        "ejs": "^3.1.6",
+        "express": "^4.17.1",
+        "path": "^0.12.7",
         "socket.io": "^4.1.3"
     }
 }
