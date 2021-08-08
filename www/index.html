@@ -167,29 +167,6 @@
         </div>
     </main>
     <main id="chatApp">
-        <style>
-
-        </style>
-        <!-- <div class="chatContainer">
-            <header>
-                <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
-                <p class="tagline">a <i>space</i> of understanding</p>
-                <div id="settingsBar">
-                    <button id="downloadChatButton">Save chat</button>
-                    <button id="disconnectChatButton">Leave chat</button>
-                </div>
-            </header>
-            <div id="chatbox">
-                some text
-            </div>
-            <div id="chatInput">
-                <!--Main Textbox
-                <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
-                <!--Send button on right
-                <div id="sendButton" class="start">Send</div>
-            </div>
-        </div> -->
-
         <section class="msger">
             <header class="messenger-header">
                 <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
@@ -223,14 +200,11 @@
                 var chatbox = document.querySelector("#chatbox");
                 var div = document.createElement("div");
                 div.classList.add("text");
-                div.classList.add("msg");
                 //Filter the texts and send them to which side they belong on based on sender
                 if (localOrRemote == "local") {
                     div.classList.add("right");
-                    div.classList.add("right-msg");
                 } else if (localOrRemote == "remote") {
                     div.classList.add("left");
-                    div.classList.add("left-msg");
                 }
                 /*
                 //Add the name as a class for the customized colors
