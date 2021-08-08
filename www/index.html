@@ -236,7 +236,8 @@
             //Show loading sign
             loadingModalElem.style.display = "block";
             //Start socket
-            var socket = io.connect("https://rocket-rants.herokuapp.com/");
+            //var socket = io.connect("https://rocket-rants.herokuapp.com/");
+            var socket = io.connect("localhost:5000");
             //While that connects get form data
             var userDataForm = document.forms["userData"];
             var venterOrListener = userDataForm["switch"].value;
@@ -251,7 +252,7 @@
                 //Put them in their waiting room whether they are a venter or a listener
                 //Ask to join room
                 socket.emit("joinRoom", "waitingRoom-" + venterOrListener);
-                socket.join("waitingRoom-" + venterOrListener); //Now the Server will take care of the rest and send back a "roomFound" event with a roomID to this user and its counterpart
+                //socket.join("waitingRoom-" + venterOrListener); //Now the Server will take care of the rest and send back a "roomFound" event with a roomID to this user and its counterpart
                 socket.on("roomFound", (roomID) => {
                     //The server will control the rooms for the user
                     socket.emit("leaveRoom", "waitingRoom-" + venterOrListener);
