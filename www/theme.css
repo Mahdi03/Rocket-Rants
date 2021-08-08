@@ -48,7 +48,7 @@ header .pageTitleIcon {
     margin: auto;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    color:#0353ff;
+    color: #0353ff;
 }
 
 form {
@@ -264,19 +264,21 @@ html {
 }
 
 #downloadChatButton {
-  margin-left: 3px;
-  color:#0353ff;
-  max-width: 50px;
-  background-color: black;
-  border: none;
+    margin-left: 3px;
+    color: #0353ff;
+    max-width: 50px;
+    background-color: black;
+    border: none;
 }
+
 #disconnectChatButton {
-  margin-right: 2px;
-  max-width: 50px;
-  float: right;
-  background-color: black;
-  border:none;
+    margin-right: 2px;
+    max-width: 50px;
+    float: right;
+    background-color: black;
+    border: none;
 }
+
 
 /*Any text bubble*/
 
@@ -333,6 +335,9 @@ img {
 .info {
     text-align: center;
     clear: both;
+    color: gray;
+    margin: 0 auto;
+    font-size: 50%;
 }
 
 
