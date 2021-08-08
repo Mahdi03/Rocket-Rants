@@ -56,8 +56,7 @@
         <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
         <p id="tagline">a <i>space</i> of understanding</p>
     </header>
-    <main>
-        <br>
+    <main id="initialPage">
         <form>
             <style>
                 .switch-container {
@@ -162,29 +161,80 @@
             </div>
         </div>
         <img id="leftrocket" src="img/big_both_white.png" />
-    </main>
-    <script>
-        let startButtonElem = document.getElementById("startButton");
-        let loadingModalElem = document.getElementById("myModal");
-        let closeButtonElem = document.getElementsByClassName("close")[0];
+        <script>
+            let startButtonElem = document.getElementById("startButton");
+            let loadingModalElem = document.getElementById("myModal");
+            let closeButtonElem = document.getElementsByClassName("close")[0];
 
-        startButtonElem.onclick = function() {
-            loadingModalElem.style.display = "block";
-        }
+            startButtonElem.onclick = function() {
+                loadingModalElem.style.display = "block";
+            }
 
-        // When the user clicks on <span> (x), close the modal
-        closeButtonElem.onclick = function() {
-            loadingModalElem.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == loadingModalElem) {
+            // When the user clicks on <span> (x), close the modal
+            closeButtonElem.onclick = function() {
                 loadingModalElem.style.display = "none";
             }
-        }
-    </script>
-    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == loadingModalElem) {
+                    loadingModalElem.style.display = "none";
+                }
+            }
+        </script>
+    </main>
+    <main id="chatApp">
+        <style>
+
+        </style>
+        <div id="chatbox">
+            some text
+        </div>
+        <div id="chatInput">
+            <!--Media inputs on left-->
+            <button>Media</button>
+            <!--Main Textbox-->
+            <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
+            <!--Send button on right-->
+            <button>Send</button>
+        </div>
+        <script>
+            function addTextToScreen(message, localOrRemote) {
+                var chatbox = document.querySelector("#chatbox");
+                var div = document.createElement("div");
+                div.classList.add("text");
+                //Filter the texts and send them to which side they belong on based on sender
+                if (localOrRemote == "local") {
+                    div.classList.add("right");
+                } else if (localOrRemote == "remote") {
+                    div.classList.add("left");
+                }
+                /*
+                //Add the name as a class for the customized colors
+                div.classList.add(name);
+                
+                //Add a human readable timestamp along with sender when hovered over
+                div.title = name + ", " + dateSent + ", " + timeSent;
+                //Add content to text bubble accordingly based on what the content is
+                switch (message.type) {
+                    case "txt":
+                        div.innerHTML = message.text;
+                        break;
+                    case "img":
+                        div.innerHTML = message.image;
+                        break;
+                }*/
+                div.innerText = message; //Sanitize the message!!!
+                chatbox.appendChild(div);
+                //Now scroll all the way to the bottom smoothly
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: "smooth"
+                });
+            }
+        </script>
+    </main>
+    <!-- <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
     <script>
         document.addEventListener("deviceready", () => {
             //All JS logic goes in device ready event
