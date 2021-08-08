@@ -12,6 +12,18 @@
 </head>
 
 <body>
+    <div id="splashscreen">
+        <img src="img/splash_screen.png" />
+    </div>
+    <script>
+        setTimeout(() => {
+            //Make image disappear after 2.5 secs
+            document.querySelector("#splashscreen").classList.add("fadeOut");
+            setTimeout(() => {
+                document.querySelector("#splashscreen").style.display = "none";
+            }, 250);
+        }, 2500);
+    </script>
     <!--
         <div class="app">
             <h1>Apache Cordova</h1>
