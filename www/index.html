@@ -176,9 +176,7 @@
             let radioRoleElem = document.querySelectorAll("roleRadio");
             radioRoleElem.onchange = () => {
                 let radioRoleVal = radioRoleElem.value;
-                let oppositeRole;
-                if (radioRoleVal = "ranters") oppositeRole = "listener";
-                else oppositeRole = "ranter";
+                let oppositeRole = (radioRoleVal == "ranters") ? "listener" : "ranter";
                 let dynamicRole = document.getElementById("oppositeRole");
                 dynamicRole.innerHTML = oppositeRole;
             };
@@ -331,11 +329,6 @@
                     //Detect whether they want to leave the chat
 
 
-                    let cancelButtonElem = document.getElementById("cancelLoading");
-                    cancelButtonElem.onclick = function(event) {
-                        loadingModalElem.style.display = "none";
-                        socket.emit("leaveChat");
-                    };
                     /*
                     // When the user clicks anywhere outside of the modal, close it
                     window.onclick = function(event) {
@@ -363,6 +356,11 @@
                         });
                     }
                 });
+                let cancelButtonElem = document.getElementById("cancelLoading");
+                cancelButtonElem.onclick = function(event) {
+                    loadingModalElem.style.display = "none";
+                    socket.emit("leaveChat");
+                };
             });
 
         });
