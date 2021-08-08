@@ -96,7 +96,7 @@ p {
     /* Enable scroll if needed */
     background-color: rgb(0, 0, 0);
     /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.85);
     /* Black w/ opacity */
     text-align: center;
 }
@@ -104,10 +104,9 @@ p {
 .modal-content {
     border-radius: 4px;
     color: black;
-    background-color: #fefefe;
+
     margin: auto;
     padding: 20px;
-    border: 1px solid #888;
     width: 80%;
 }
 
@@ -132,6 +131,19 @@ p {
     top: 300px;
     right: 40px;
 }
+
+@keyframes spin {
+    0% {
+      transform: rotateZ(0);
+    }
+    100% {
+      transform: rotateZ(360deg);
+    }
+  }
+  
+  #loadingimg {
+    animation: spin 1.7s linear infinite;
+  }
 
 
 /************************************************For chat.html*****************************************************/

@@ -157,7 +157,7 @@
                 <span class="close">&times;</span>
                 <p style="font-size: 20px;">Connecting you to a listener...</p>
                 <!--send socket request to whatever room they chose-->
-                <img src="img/loading.gif" style="max-width: 50%;" />
+                <img id="loadingimg" src="img/rocketloading.svg" style="max-width: 50%;" />
             </div>
         </div>
         <img id="leftrocket" src="img/big_both_white.png" />
@@ -191,12 +191,10 @@
             some text
         </div>
         <div id="chatInput">
-            <!--Media inputs on left-->
-            <button>Media</button>
             <!--Main Textbox-->
             <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
             <!--Send button on right-->
-            <button>Send</button>
+            <button class="start">Send</button>
         </div>
         <script>
             function addTextToScreen(message, localOrRemote) {

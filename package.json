@@ -20,7 +20,10 @@
     "cordova": {
         "plugins": {
             "cordova-plugin-whitelist": {}
-        }
+        },
+        "platforms": [
+            "android"
+        ]
     },
     "dependencies": {
         "socket.io": "^4.1.3"
