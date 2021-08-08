@@ -18,6 +18,7 @@ main {
 
 header {
     background-color: black;
+    margin-bottom: 4px;
 }
 
 header .pageTitle {
@@ -47,6 +48,7 @@ header .pageTitleIcon {
     margin: auto;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
+    color:#0353ff;
 }
 
 form {
@@ -130,12 +132,12 @@ p {
     cursor: pointer;
 }
 
-#leftrocket {
+#rocketsimg {
     position: fixed;
     z-index: 0;
     max-width: 40%;
     top: 300px;
-    right: 40px;
+    right: 25px;
 }
 
 @keyframes spin {
@@ -210,7 +212,6 @@ html {
     flex-flow: column wrap;
     justify-content: space-between;
     width: 100%;
-    max-width: 867px;
     margin: 25px 10px;
     height: calc(100% - 50px);
     border: var(--border);
@@ -236,30 +237,46 @@ html {
 }
 
 #inputMessage {
-    width: 80%;
+    margin-left: 8px;
+    padding: 8px;
+    width: 75%;
     resize: none;
 }
 
 .msger-inputarea {
+    padding-top: 8px;
+    padding-bottom: 8px;
     justify-content: space-around;
     width: 100%;
     margin-top: -10px;
     position: fixed;
-    bottom: 0;
+    bottom: 5px;
     left: 0;
     display: flex;
-    padding: 10px;
     border-top: var(--border);
-    background: rgb(0, 0, 0);
+    background: #181c25;
 }
 
 .msger-inputarea * {
-    padding: 10px;
     border: none;
     border-radius: 3px;
     font-size: 1em;
 }
 
+#downloadChatButton {
+  margin-left: 3px;
+  color:#0353ff;
+  max-width: 50px;
+  background-color: black;
+  border: none;
+}
+#disconnectChatButton {
+  margin-right: 2px;
+  max-width: 50px;
+  float: right;
+  background-color: black;
+  border:none;
+}
 
 /*Any text bubble*/
 
