@@ -51,17 +51,16 @@
         <script src="cordova.js"></script>
         <script src="js/index.js"></script>-->
 
-
     <header>
-        <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
-        <p id="tagline">a <i>space</i> of understanding</p>
-        <div id="settingsBar">
+        <h1 id="initialPage" class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
+        <p id="initialPage" class="tagline">a <i>space</i> of understanding</p>
+        <!-- <div id="settingsBar">
             <button id="downloadChatButton">Save chat</button>
             <button id="disconnectChatButton">Leave chat</button>
-        </div>
+        </div> -->
     </header>
     <main id="initialPage">
-        <form>
+        <form name="userData">
             <style>
                 .switch-container {
                     text-align: center;
@@ -116,9 +115,9 @@
                 }
             </style>
             <div class="switch-container">
-                <input class="roleRadio" type="radio" name="switch" id="on" checked/>
+                <input class="roleRadio" type="radio" name="switch" id="on" value="on" checked/>
                 <label for="on" class="switch-label on">Rant</label>
-                <input class="roleRadio" type="radio" name="switch" id="off" />
+                <input class="roleRadio" type="radio" name="switch" id="off" value="off" />
                 <label for="off" class="switch-label off">Listen</label>
                 <div class="switch-selection"></div>
             </div><br><br>
@@ -156,6 +155,8 @@
             </datalist><br /><br />
             <button type="button" class="start" id="startButton" value="Start Chat">&nbsp;&nbsp;Start Chat&nbsp;&nbsp;</button>
         </form>
+        <img id="leftrocket" src="img/big_both_white.png" />
+        
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -164,7 +165,7 @@
                 <img id="loadingimg" src="img/rocketloading.svg" style="max-width: 50%;" />
             </div>
         </div>
-        <img id="leftrocket" src="img/big_both_white.png" />
+        
         <script>
             let startButtonElem = document.getElementById("startButton");
             let loadingModalElem = document.getElementById("myModal");
@@ -191,29 +192,66 @@
         <style>
 
         </style>
-        <div id="chatbox">
-            some text
-        </div>
-        <div id="chatInput">
-            <!--Main Textbox-->
-            <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
-            <!--Send button on right-->
-<<<<<<< HEAD
-            <button class="start">Send</button>
-=======
-            <div id="sendButton" class="start">Send</div>
->>>>>>> c49492857a93b9b33437fc19a954516a52d97b9b
-        </div>
+        <!-- <div class="chatContainer">
+            <header>
+                <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
+                <p class="tagline">a <i>space</i> of understanding</p>
+                <div id="settingsBar">
+                    <button id="downloadChatButton">Save chat</button>
+                    <button id="disconnectChatButton">Leave chat</button>
+                </div>
+            </header>
+            <div id="chatbox">
+                some text
+            </div>
+            <div id="chatInput">
+                <!--Main Textbox
+                <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
+                <!--Send button on right
+                <div id="sendButton" class="start">Send</div>
+            </div>
+        </div> -->
+        
+        <section class="msger">
+            <header class="messenger-header">
+                <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
+                <p class="tagline">a <i>space</i> of understanding</p>
+                <div id="settingsBar">
+                    <button id="downloadChatButton">Save chat</button>
+                    <button id="disconnectChatButton" style="float:right;">Leave chat</button>
+                </div>
+            </header>
+          
+            <div id="chatbox">
+            </div>
+          
+            <div id="chatInput" class="msger-inputarea">
+                <!--Main Textbox-->
+                <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
+                <!--Send button on right-->
+                <div id="sendButton" class="start">Send</div>
+            </div>
+          </section>
         <script>
+            let chatInputElem = document.getElementById("inputMessage");
+            chatInputElem.addEventListener("focus", (event) => {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: "smooth"
+                });
+            })
             function addTextToScreen(message, localOrRemote) {
                 var chatbox = document.querySelector("#chatbox");
                 var div = document.createElement("div");
                 div.classList.add("text");
+                div.classList.add("msg");
                 //Filter the texts and send them to which side they belong on based on sender
                 if (localOrRemote == "local") {
                     div.classList.add("right");
+                    div.classList.add("right-msg");
                 } else if (localOrRemote == "remote") {
                     div.classList.add("left");
+                    div.classList.add("left-msg");
                 }
                 /*
                 //Add the name as a class for the customized colors
