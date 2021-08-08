@@ -21,7 +21,10 @@
     "cordova": {
         "plugins": {
             "cordova-plugin-whitelist": {}
-        }
+        },
+        "platforms": [
+            "android"
+        ]
     },
     "dependencies": {
         "ejs": "^3.1.6",
