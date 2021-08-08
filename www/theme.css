@@ -7,6 +7,7 @@ main {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+
 /*For main headers*/
 
 header .pageTitle {
@@ -18,7 +19,7 @@ header .pageTitle {
     color: #0353ff;
     font-family: 'Verdana', cursive;
     margin-bottom: 0;
-    align-items:center;
+    align-items: center;
 }
 
 header .pageTitleIcon {
@@ -32,9 +33,8 @@ header .pageTitleIcon {
 
 /************************************************For index.html****************************************************/
 
-
 #tagline {
-    margin:auto;
+    margin: auto;
     text-align: center;
 }
 
@@ -43,77 +43,25 @@ form {
     padding: 1.5rem;
     background-color: #181c25;
     border-radius: 6px;
-
 }
-
-
 
 .nobreak {
     white-space: nowrap;
 }
 
-input {
-    display:none;
-}
-
-.nonRole { 
-    display:block;
-}
 .ageInput {
     width: 15%;
     display: inline;
 }
-.ageInput2 {
-    float:none;
-}
-.container{
-    text-align: center;
-    position: relative;
-    margin: auto;
-    background: #757575;
-    float: left;
-    border-radius: 3px;
-    box-shadow: 1px 1px 2px #757575;
-    width: 136px;
-}
-.switch-label{
-    position: relative;
-    border-radius: 3px;
-    color: #fff;
-    padding: 4px;
-    float: left;
-    width: 60px;
-    color: black;
-    height: 16px;
-    z-index: 2;
-    transition: all .3s ease-out;
-    cursor: pointer;
-}
-input:checked + .switch-label{
-    color: #fff;
-    font-weight: bolder;
-}
 
-.switch-selection{
-    position: absolute;
-    width: 60px;
-    top: 0;
-    height: 16px;
-    left: 0;
-    padding: 4px;
-    z-index: 1;
-    background: #0353ff;
-    box-shadow: 1px 0px 4px #212121;
-    transition: left 0.2s ease-out;
-}
-  
-input:checked + .off ~ .switch-selection{
-    box-shadow: -1px 0px 4px #212121;
-    left: 68px;
+label,
+p {
+    color: white;
+    /*Just for readability purposes for now*/
 }
 
 .start {
-    margin:auto;
+    margin: auto;
     font-size: 16px;
     font-weight: bolder;
     text-align: center;
@@ -125,20 +73,29 @@ input:checked + .off ~ .switch-selection{
 }
 
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 100; /* Sit on top */
-    padding-top: 150px; /* Location of the box */
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 100;
+    /* Sit on top */
+    padding-top: 150px;
+    /* Location of the box */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
     text-align: center;
 }
-  
+
 .modal-content {
     border-radius: 4px;
     color: black;
@@ -148,14 +105,14 @@ input:checked + .off ~ .switch-selection{
     border: 1px solid #888;
     width: 80%;
 }
-  
+
 .close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
-  
+
 .close:hover,
 .close:focus {
     color: #000;
@@ -170,6 +127,7 @@ input:checked + .off ~ .switch-selection{
     top: 300px;
     right: 40px;
 }
+
 
 /************************************************For chat.html*****************************************************/
 

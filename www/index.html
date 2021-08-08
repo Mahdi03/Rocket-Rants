@@ -53,61 +53,115 @@
 
 
     <header>
-        <h1 class="pageTitle"><img src="../img/small_left_white.png" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
-        <p id="tagline">a <i>space</i> of understanding</h2>
+        <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
+        <p id="tagline">a <i>space</i> of understanding</p>
     </header>
     <main>
         <br>
         <form>
-            <div class="container">
+            <style>
+                .switch-container {
+                    text-align: center;
+                    position: relative;
+                    margin: auto;
+                    background: #757575;
+                    float: left;
+                    border-radius: 3px;
+                    box-shadow: 1px 1px 2px #757575;
+                    width: 136px;
+                }
+                
+                .switch-container input {
+                    display: none;
+                }
+                
+                .switch-container .switch-label {
+                    position: relative;
+                    border-radius: 3px;
+                    color: #fff;
+                    padding: 4px;
+                    float: left;
+                    width: 60px;
+                    color: black;
+                    height: 16px;
+                    z-index: 2;
+                    transition: all .3s ease-out;
+                    cursor: pointer;
+                }
+                
+                .switch-container input:checked+.switch-label {
+                    color: #fff;
+                    font-weight: bolder;
+                }
+                
+                .switch-container .switch-selection {
+                    position: absolute;
+                    width: 60px;
+                    top: 0;
+                    height: 16px;
+                    left: 0;
+                    padding: 4px;
+                    z-index: 1;
+                    background: #0353ff;
+                    box-shadow: 1px 0px 4px #212121;
+                    transition: left 0.2s ease-out;
+                }
+                
+                .switch-container input:checked+.off~.switch-selection {
+                    box-shadow: -1px 0px 4px #212121;
+                    left: 68px;
+                }
+            </style>
+            <div class="switch-container">
                 <input class="roleRadio" type="radio" name="switch" id="on" checked/>
                 <label for="on" class="switch-label on">Rant</label>
-                
                 <input class="roleRadio" type="radio" name="switch" id="off" />
                 <label for="off" class="switch-label off">Listen</label>
-              
-            <div class="switch-selection"></div>
+                <div class="switch-selection"></div>
             </div><br><br>
-            <input class="nonRole" style="float:left; transform: scale(1.2);" type="checkbox" name="clean" checked>
-            <label for="clean">&nbsp;Clean filter</label>
+            <label for="clean"><input style="float:left; transform: scale(1.2);" type="checkbox" name="clean" checked />&nbsp;Clean filter</label>
             <p>All fields are optional.</p>
-            <label>Screen Name:</label><br>
-            <input class="nonRole" type="text"><br>
-            <label>Age:</label><br>
-            <input class="ageInput nonRole" type="number" placeholder="min">
-            <label> to:</label></nobr>
-            <input class="ageInput ageInput2 nonRole" type="number" placeholder="max"><br><br>
-            <label>Gender:</label><br>
-            <select>
-                <option value="0"></option>
-                <option value="1">Female</option>
-                <option value="2">Male</option>
-                <option value="3">Non-binary</option>
-                <option value="4">Transgender</option>
-                <option value="5">Questioning</option>
-            </select><br><br>
-            <label">Pronouns:</label><br>
-            <input class="nonRole" style="z-index: 2;" type="text"><br>
-            <label">Race/Ethnicity:</label><br>
-            <select>
-                <option value="0"></option>
-                <option value="1">American Indian or Alaska Native</option>
-                <option value="2">Asian</option>
-                <option value="3">Black or African American</option>
-                <option value="4">Hispanic or Latino</option>
-                <option value="5">Native Hawaiian or Other Pacific Islander</option>
-                <option value="6">White</option>
-            </select><br><br>
-            <button type="button" class="nonRole start" id="startButton" value="Start Chat">&nbsp;&nbsp;Start Chat&nbsp;&nbsp;</button>
+            <label for="screenName">Screen Name:</label><br />
+            <input class="nonRole" name="screenName" type="text"><br />
+            <label for="ageInputMin">Age:</label><br>
+            <input class="ageInput nonRole" name="ageInputMin" type="number" placeholder="min">
+            <label for="ageInputMax"> to:</label></nobr>
+            <input class="ageInput ageInput2 nonRole" name="ageInputMax" type="number" placeholder="max"><br><br>
+            <label for="genderSelect">Gender:</label><br />
+            <input list="genderList" id="genderSelect" name="genderSelect" />
+            <datalist id="genderList">
+                <option value="Female" />
+                <option value="Male" />
+                <option value="Non-binary" />
+                <option value="Transgender" />
+                <option value="Questioning" />
+                <option value=" ">Or type your own</option>
+            </datalist>
+            <br /><br />
+            <label for="pronouns">Pronouns:</label><br />
+            <input name="pronouns" type="text" /><br />
+            <label for="raceAndEthnicity">Race/Ethnicity:</label><br />
+            <input list="raceAndEthnicityList" id="raceAndEthnicity" name="raceAndEthnicity" />
+            <datalist id="raceAndEthnicityList">
+                <option value="American Indian or Alaska Native"></option>
+                <option value="Asian"></option>
+                <option value="Black or African American"></option>
+                <option value="Hispanic or Latino"></option>
+                <option value="Native Hawaiian or Other Pacific Islander"></option>
+                <option value="White"></option>
+                <option value=" ">Or type your own</option>
+            </datalist><br /><br />
+            <button type="button" class="start" id="startButton" value="Start Chat">&nbsp;&nbsp;Start Chat&nbsp;&nbsp;</button>
         </form>
         <div id="myModal" class="modal">
             <div class="modal-content">
-              <span class="close">&times;</span>
-              <p style="font-size: 20px;">Connecting you to a listener...</p>
-              <img src="../img/loading.gif" style="max-width: 50%;"/>
+                <span class="close">&times;</span>
+                <p style="font-size: 20px;">Connecting you to a listener...</p>
+                <!--send socket request to whatever room they chose-->
+                <img src="img/loading.gif" style="max-width: 50%;" />
             </div>
-          </div>
-        <img id="leftrocket" src="../img/big_both_white.png"/>
+        </div>
+        <img id="leftrocket" src="img/big_both_white.png" />
     </main>
     <script>
         let startButtonElem = document.getElementById("startButton");
@@ -119,14 +173,14 @@
         }
 
         // When the user clicks on <span> (x), close the modal
-            closeButtonElem.onclick = function() {
+        closeButtonElem.onclick = function() {
             loadingModalElem.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
-        if (event.target == loadingModalElem) {
-            loadingModalElem.style.display = "none";
+            if (event.target == loadingModalElem) {
+                loadingModalElem.style.display = "none";
             }
         }
     </script>
