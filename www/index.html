@@ -196,7 +196,7 @@
             <!--Main Textbox-->
             <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
             <!--Send button on right-->
-            <button id="sendButton">Send</button>
+            <div id="sendButton" class="start">Send</div>
         </div>
         <script>
             function addTextToScreen(message, localOrRemote) {
@@ -236,7 +236,7 @@
             sendButton.onclick = (event) => {
                 event.preventDefault();
                 var inputMessage = document.querySelector("#inputMessage");
-                addTextToScreen(inputMessage.innerText, "local");
+                addTextToScreen(inputMessage.value, "local");
             };
             sendButton.addEventListener("mousedown", (event) => {
                 event.preventDefault(); //Used to make sure button doesn't steal focus from textarea and that keyboard doesn't disappear
