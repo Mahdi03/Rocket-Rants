@@ -145,7 +145,7 @@
                 <p class="tagline">a <i>space</i> of understanding</p>
                 <div id="settingsBar">
                     <button id="downloadChatButton" onclick="window.print();" alt="save chat"><img src="img/download.png"></button>
-                    <span id="screenName">Name</span>
+                    <span id="screenName"></span>
                     <button id="disconnectChatButton" alt="leave chat"><img src="img/door.png"></button>
                 </div>
             </header>
@@ -179,14 +179,21 @@
 
             function addTextToScreen(message, localOrRemote) {
                 var chatbox = document.querySelector("#chatbox");
-                var div = document.createElement("div");
-                div.classList.add("text");
-                //Filter the texts and send them to which side they belong on based on sender
-                if (localOrRemote == "local") {
-                    div.classList.add("right");
-                } else if (localOrRemote == "remote") {
-                    div.classList.add("left");
+                var elementToAppend;
+                if (localOrRemote == "info") {
+                    elementToAppend = document.createElement("p");
+                    elementToAppend.classList.add("info");
+                } else {
+                    elementToAppend = document.createElement("div");
+                    elementToAppend.classList.add("text");
+                    //Filter the texts and send them to which side they belong on based on sender
+                    if (localOrRemote == "local") {
+                        elementToAppend.classList.add("right");
+                    } else if (localOrRemote == "remote") {
+                        elementToAppend.classList.add("left");
+                    }
                 }
+                elementToAppend.innerText = message; //Sanitize the message!!!
                 /*
                 //Add the name as a class for the customized colors
                 div.classList.add(name);
@@ -202,8 +209,8 @@
                         div.innerHTML = message.image;
                         break;
                 }*/
-                div.innerText = message; //Sanitize the message!!!
-                chatbox.appendChild(div);
+
+                chatbox.appendChild(elementToAppend);
                 //Now scroll all the way to the bottom smoothly
                 window.scrollTo({
                     top: document.body.scrollHeight,
@@ -236,6 +243,11 @@
             chatApp.classList.add("hideChat");
             setTimeout(() => {
                 chatApp.style.display = "none";
+                //Clear the chat app
+                chatApp.innerHTML = "";
+                document.querySelector("#inputMessage").value = "";
+                var screenName = document.querySelector("#screenName");
+                screenName.innerText = "";
                 initialPage.style.display = "block";
             }, 1000); //In 1s the animation will be over
             //initialPage.style.display = "block";
@@ -267,7 +279,16 @@
                     socket.emit("leaveRoom", "waitingRoom-" + venterOrListener);
                     socket.emit("joinRoom", roomID);
                     loadingModalElem.style.display = "none";
+                    socket.on("usernameInfo", (otherUserNickname) => {
+                        //Add otherUserNickname to top
+                        var screenName = document.querySelector("#screenName");
+                        screenName.innerText = otherUserNickname;
+                    });
                     showChatApp();
+                    socket.emit("usernameInfo", {
+                        roomID: roomID,
+                        nickname: nickname
+                    });
                     //Now deal with actual messaging
                     var sendButton = document.querySelector("#sendButton");
                     sendButton.onclick = (event) => {
@@ -280,6 +301,8 @@
                             messageText: text
                         });
                         addTextToScreen(text, "local"); //Add it to our screen on our side
+                        //Now empty textbox
+                        inputMessage.value = "";
                     };
                     sendButton.addEventListener("mousedown", (event) => {
                         event.preventDefault(); //Used to make sure button doesn't steal focus from textarea and that keyboard doesn't disappear
@@ -288,13 +311,32 @@
                     socket.on("message", (receivedMessage) => {
                         addTextToScreen(receivedMessage, "remote");
                     });
+                    socket.on("info", (info) => {
+                        addTextToScreen(info, "info");
+                    });
+                    //Detect whether they want to leave the chat
+                    var disconnectChatButton = document.querySelector("#disconnectChatButton");
+                    disconnectChatButton.onclick = () => {
+                        socket.emit("info", {
+                            roomID: roomID,
+                            infoMessage: `${nickname} has left the chat`
+                        });
+                        socket.emit("leaveRoom", roomID);
+                        socket.emit("leaveChat");
+                        hideChatApp();
+                    };
+                    //Detect whether they tried to save the chat
+                    var downloadChatButton = document.querySelector("#downloadChatButton");
+                    downloadChatButton.onclick = () => {
+                        socket.emit("info", {
+                            roomID: roomID,
+                            infoMessage: `${nickname} has saved the chat thus far`
+                        });
+                    }
                 });
             });
+
         });
-        var disconnectChatButton = document.querySelector("#disconnectChatButton");
-        disconnectChatButton.onclick = () => {
-            hideChatApp();
-        };
 
         let cancelButtonElem = document.getElementById("cancelLoading");
         cancelButtonElem.onclick = function(event) {
@@ -307,7 +349,6 @@
                 loadingModalElem.style.display = "none";
             }
         };
-        
     </script>
 </body>
 

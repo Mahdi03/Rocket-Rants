@@ -91,12 +91,27 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         console.log("Oh no the user left, hopefully the conversation was over. If not feel free to find someone else.");
     });
+    //Forward messages from one user to another
     socket.on("message", (messageObj) => {
         //Message received on server, send it to other client(s)
         var roomID = messageObj.roomID;
         var message = messageObj.messageText;
         //Be sure to sanitize message before sending it out
         socket.to(roomID).emit("message", message); //Send message to everyone in room except OG sender
+    });
+    socket.on("info", (messageObj) => {
+        var roomID = messageObj.roomID;
+        var info = messageObj.infoMessage;
+        socket.to(roomID).emit("info", info);
+    });
+    socket.on("usernameInfo", (usernameInfoObject) => {
+        var roomID = usernameInfoObject.roomID;
+        var nickname = usernameInfoObject.nickname;
+        socket.to(roomID).emit("usernameInfo", nickname);
+    });
+    socket.on("leaveChat", () => {
+        //The user is done, shut them off
+        socket.disconnect(true);
     });
     //Test to see if server can actually communicate back to user
     setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
