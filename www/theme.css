@@ -1,5 +1,10 @@
 /************************************************For main theme****************************************************/
 
+body,
+main {
+    margin: 0;
+}
+
 
 /*Put fonts and other color schemes here (a light and dark mode on <body>?)*/
 
@@ -134,9 +139,45 @@ p {
 
 /*Main place to display all messages*/
 
+#initialPage {
+    display: none;
+}
+
+#chatApp {
+    display: flex;
+    flex-direction: column;
+}
+
 #chatbox {
     background-color: black;
     color: white;
+    max-height: 100%;
+}
+
+#chatbox,
+#chatInput {
+    width: 100%;
+}
+
+#chatInput {
+    display: flex;
+    /*Adds space around the elements*/
+    justify-content: space-around;
+    /*Makes all elements vertically in line*/
+    align-items: center;
+    flex-direction: row;
+    /*Make sure the elements don't wrap regardless of screen size*/
+    flex-wrap: nowrap;
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 30px;
+}
+
+#chatInput textarea {
+    /*Style the main input textbox*/
+    width: 60%;
+    resize: none;
+    padding: 10px;
 }
 
 
