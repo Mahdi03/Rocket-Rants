@@ -19,6 +19,7 @@ main {
 header {
     background-color: black;
     margin-bottom: 4px;
+    border-bottom: 3px solid #181c25;
 }
 
 header .pageTitle {
@@ -263,12 +264,26 @@ html {
     font-size: 1em;
 }
 
+#settingsBar {
+  border-top: 2px solid #181c25;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 #downloadChatButton {
   margin-left: 3px;
   color:#0353ff;
   max-width: 50px;
   background-color: black;
   border: none;
+  vertical-align: bottom;
+}
+#screenName {
+  text-align: center;
+  margin: auto;
+  width: 65%;
+  display:inline-block;
+  padding-bottom:0.5rem;
 }
 #disconnectChatButton {
   margin-right: 2px;
@@ -276,6 +291,7 @@ html {
   float: right;
   background-color: black;
   border:none;
+  vertical-align: bottom;
 }
 
 /*Any text bubble*/

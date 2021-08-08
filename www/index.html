@@ -25,7 +25,7 @@
 
     <header>
         <h1 class="pageTitle"><img src="img/rocketloading.svg" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
-        <p class="tagline">a <i>space</i> of understanding</p>
+        <p class="tagline" style="margin-bottom: 1rem;">a <i>space</i> of understanding</p>
         <!-- <div id="settingsBar">
             <button id="downloadChatButton">Save chat</button>
             <button id="disconnectChatButton">Leave chat</button>
@@ -131,20 +131,21 @@
 
         <div id="myModal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <p style="font-size: 20px;">Connecting you to a listener...</p>
+                <p style="font-size: 20px;">Connecting you to a <span id="oppositeRole"></span>...</p>;
                 <!--send socket request to whatever room they chose-->
-                <img id="loadingimg" src="img/rocketloading.svg" style="max-width: 50%;" />
+                <img id="loadingimg" src="img/rocketloading.svg" style="max-width: 50%;" /><br><br>
+                <button id="cancelLoading" class="start">&nbsp;Cancel&nbsp;</button>
             </div>
         </div>
     </main>
     <main id="chatApp">
         <section class="msger">
             <header class="messenger-header">
-                <h1 class="pageTitle"><img src="img/rocketloading.svg" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
+                <h1 class="pageTitle" style="font-size: 25px; margin-top: 5px;"><img src="img/rocketloading.svg" style="max-width: 40px; max-height: 40px;" alt="Rocket Rants logo" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
                 <p class="tagline">a <i>space</i> of understanding</p>
                 <div id="settingsBar">
                     <button id="downloadChatButton" onclick="window.print();" alt="save chat"><img src="img/download.png"></button>
+                    <span id="screenName">Name</span>
                     <button id="disconnectChatButton" alt="leave chat"><img src="img/door.png"></button>
                 </div>
             </header>
@@ -160,6 +161,14 @@
             </div>
         </section>
         <script>
+            let radioRoleElem = document.querySelectorAll("roleRadio");
+            let radioRoleVal = radioRoleElem.value;
+            let oppositeRole;
+            if (radioRoleVal = "ranters") oppositeRole = "listener";
+            else oppositeRole = "ranter";
+            let dynamicRole = document.getElementById("oppositeRole");
+            dynamicRole.innerHTML = oppositeRole;
+
             let chatInputElem = document.getElementById("inputMessage");
             chatInputElem.addEventListener("focus", (event) => {
                 window.scrollTo({
@@ -286,9 +295,8 @@
             hideChatApp();
         };
 
-        /* UHM no??? We're gonna remove the loader when the time is ready, not let them do it before then, if they don't like it they can leave
-        // When the user clicks on <span> (x), close the modal
-        closeButtonElem.onclick = function() {
+        let cancelButtonElem = document.getElementById("cancelLoading");
+        cancelButtonElem.onclick = function(event) {
             loadingModalElem.style.display = "none";
         };
 
@@ -298,7 +306,7 @@
                 loadingModalElem.style.display = "none";
             }
         };
-        */
+        
     </script>
 </body>
 
