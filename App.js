@@ -5,7 +5,11 @@
  * between the server and the client-side (which will be apache cordova in the www/
  * folder)
  */
-/* We probs don't need express because it's just a message server */
+/* We probs don't need express because it's just a message server
+    we needed express to serve our site on the same host, also accidentally
+    avoided cors ya yeet
+*/
+const { v4: uuidv4 } = require('uuid');
 
 const express = require('express'); //npm install express
 const PORT = process.env.PORT || 5000;
@@ -30,20 +34,52 @@ app.get("/", (req, res) => {
     console.log(`Success, listening on port: ${PORT}`);
 });*/
 
-//////ORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 io.on("connection", (socket) => {
+    socket.on("joinRoom", (roomName) => {
+        socket.join(roomName);
+    });
+    socket.on("leaveRoom", (roomName) => {
+        socket.join(roomName);
+    });
     console.log("A user has connected");
+    //Lets look at users in venting waiting room and users in listening waiting room
+    //Get all users in venting waiting room
+    var rantingWaitingRoom = io.sockets.adapter.rooms["waitingRoom-ranters"]; //Returns a Set()
+    var usersInRantingWaitingRoom = [];
+    for (let userID in rantingWaitingRoom.values()) {
+        usersInRantingWaitingRoom.push(userID);
+    }
+    var listeningWaitingRoom = io.sockets.adapter.rooms["waitingRoom-listeners"]; //Returns a Set()
+    var usersInListeningWaitingRoom = [];
+    for (let userID in listeningWaitingRoom.values()) {
+        usersInListeningWaitingRoom.push(userID);
+    }
+    while (usersInRantingWaitingRoom.length > 0 && usersInListeningWaitingRoom.length > 0) {
+        var nextInLineRanter = usersInRantingWaitingRoom[0];
+        var nextInLineListener = usersInListeningWaitingRoom[0];
+        //We don't need to pop them from those arrays tho because the next time someone connects, the arrays are recalculated
+        //anyways, and by that time the user here has already left the waiting room and is joining their discussion room
+        //disregard all that, they need to be popped because we are running this function as much as needed in a loop
+        //Get a unique room ID
+        var uniqueRoomID = uuidv4();
+        nextInLineRanter.emit("roomFound", uniqueRoomID);
+        nextInLineListener.emit("roomFound", uniqueRoomID);
+        usersInRantingWaitingRoom.splice(usersInRantingWaitingRoom.indexOf(nextInLineRanter), 1); //Removes nextInLineRanter from arr
+        usersInListeningWaitingRoom.splice(usersInListeningWaitingRoom.indexOf(nextInLineListener), 1) //Removes nextInLineListener from arr
+    }
     socket.on("disconnect", () => {
         console.log("Oh no the user left, hopefully the conversation was over. If not feel free to find someone else.");
     });
-    socket.on("message", (messageFromClient) => {
+    socket.on("message", (messageObj) => {
         //Message received on server, send it to other client(s)
+        var roomID = messageObj.roomID;
+        var message = messageObj.messageText;
         //Be sure to sanitize message before sending it out
-        io.broadcast.emit("message", messageFromClient); //the broadcast.emit instead of emit sends the message to everyone except the OG sender
+        socket.to(roomID).emit("message", message); //Send message to everyone in room except OG sender
     });
     //Test to see if server can actually communicate back to user
     setInterval(() => io.emit('time', new Date().toTimeString()), 1000);

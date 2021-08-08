@@ -61,7 +61,7 @@
         </div>
     </header>
     <main id="initialPage">
-        <form>
+        <form name="userData">
             <style>
                 .switch-container {
                     text-align: center;
@@ -116,12 +116,12 @@
                 }
             </style>
             <div class="switch-container">
-                <input class="roleRadio" type="radio" name="switch" id="on" checked/>
+                <input class="roleRadio" type="radio" name="switch" id="on" value="ranters" checked/>
                 <label for="on" class="switch-label on">Rant</label>
-                <input class="roleRadio" type="radio" name="switch" id="off" />
+                <input class="roleRadio" type="radio" name="switch" id="off" value="listeners" />
                 <label for="off" class="switch-label off">Listen</label>
                 <div class="switch-selection"></div>
-            </div><br><br>
+            </div><br /><br />
             <label for="clean"><input style="float:left; transform: scale(1.2);" type="checkbox" name="clean" checked />&nbsp;Clean filter</label>
             <p>All fields are optional.</p>
             <label for="screenName">Screen Name:</label><br />
@@ -165,57 +165,6 @@
             </div>
         </div>
         <img id="leftrocket" src="img/big_both_white.png" />
-        <script>
-            let startButtonElem = document.getElementById("startButton");
-            let loadingModalElem = document.getElementById("myModal");
-            let closeButtonElem = document.getElementsByClassName("close")[0];
-
-            function showChatApp() {
-                //Show chatApp
-                initialPage.style.display = "none";
-                chatApp.classList.remove("hideChat");
-                chatApp.style.zIndex = 20;
-                chatApp.style.display = "flex";
-                chatApp.classList.add("showChat");
-            }
-
-            function hideChatApp() {
-                //Hide chatApp
-                chatApp.classList.remove("showChat");
-                chatApp.classList.add("hideChat");
-                setTimeout(() => {
-                    chatApp.style.display = "none";
-                    initialPage.style.display = "block";
-                }, 1000); //In 1s the animation will be over
-                //initialPage.style.display = "block";
-            }
-
-            var initialPage = document.querySelector("#initialPage");
-            var chatApp = document.querySelector("#chatApp");
-            startButtonElem.onclick = function() {
-                //loadingModalElem.style.display = "block";
-                //logic to be put in waiting room, send message back that partner was found
-                //loadingModalElem.style.display = "none";
-                showChatApp();
-
-            };
-            var disconnectChatButton = document.querySelector("#disconnectChatButton");
-            disconnectChatButton.onclick = () => {
-                hideChatApp();
-            };
-
-            // When the user clicks on <span> (x), close the modal
-            closeButtonElem.onclick = function() {
-                loadingModalElem.style.display = "none";
-            };
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == loadingModalElem) {
-                    loadingModalElem.style.display = "none";
-                }
-            };
-        </script>
     </main>
     <main id="chatApp">
         <div id="chatbox">
@@ -261,23 +210,109 @@
                     behavior: "smooth"
                 });
             }
-            var sendButton = document.querySelector("#sendButton");
-            sendButton.onclick = (event) => {
-                event.preventDefault();
-                var inputMessage = document.querySelector("#inputMessage");
-                addTextToScreen(inputMessage.value, "local");
-            };
-            sendButton.addEventListener("mousedown", (event) => {
-                event.preventDefault(); //Used to make sure button doesn't steal focus from textarea and that keyboard doesn't disappear
-            });
         </script>
     </main>
     <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
     <script>
+        let startButtonElem = document.getElementById("startButton");
+        let loadingModalElem = document.getElementById("myModal");
+        let closeButtonElem = document.getElementsByClassName("close")[0];
+
         var initialPage = document.querySelector("#initialPage");
         var chatApp = document.querySelector("#chatApp");
 
-        var socket = io.connect("https://rocket-rants.herokuapp.com/");
+        function showChatApp() {
+            //Show chatApp
+            initialPage.style.display = "none";
+            chatApp.classList.remove("hideChat");
+            chatApp.style.zIndex = 20;
+            chatApp.style.display = "flex";
+            chatApp.classList.add("showChat");
+        }
+
+        function hideChatApp() {
+            //Hide chatApp
+            chatApp.classList.remove("showChat");
+            chatApp.classList.add("hideChat");
+            setTimeout(() => {
+                chatApp.style.display = "none";
+                initialPage.style.display = "block";
+            }, 1000); //In 1s the animation will be over
+            //initialPage.style.display = "block";
+        }
+
+        startButtonElem.addEventListener("click", () => {
+            //Show loading sign
+            loadingModalElem.style.display = "block";
+            //Start socket
+            var socket = io.connect("https://rocket-rants.herokuapp.com/");
+            //While that connects get form data
+            var userDataForm = document.forms["userData"];
+            var venterOrListener = userDataForm["switch"].value;
+            var nickname = userDataForm["screenName"].value;
+            var minAge = userDataForm["ageInputMin"].value;
+            var maxAge = userDataForm["ageInputMax"].value;
+            var gender = userDataForm["genderSelect"].value;
+            var pronouns = userDataForm["pronouns"].value;
+            var raceAndEthnicity = userDataForm["raceAndEthnicity"].value;
+
+            socket.on("connect", () => {
+                //Put them in their waiting room whether they are a venter or a listener
+                //Ask to join room
+                socket.emit("joinRoom", "waitingRoom-" + venterOrListener);
+                socket.join("waitingRoom-" + venterOrListener); //Now the Server will take care of the rest and send back a "roomFound" event with a roomID to this user and its counterpart
+                socket.on("roomFound", (roomID) => {
+                    //The server will control the rooms for the user
+                    socket.emit("leaveRoom", "waitingRoom-" + venterOrListener);
+                    socket.emit("joinRoom", roomID);
+                    loadingModalElem.style.display = "none";
+                    showChatApp();
+                    //Now deal with actual messaging
+                    var sendButton = document.querySelector("#sendButton");
+                    sendButton.onclick = (event) => {
+                        event.preventDefault();
+                        var inputMessage = document.querySelector("#inputMessage");
+                        var text = inputMessage.value;
+                        //Send it to server
+                        socket.emit("message", {
+                            roomID: roomID,
+                            messageText: text
+                        });
+                        addTextToScreen(text, "local"); //Add it to our screen on our side
+                    };
+                    sendButton.addEventListener("mousedown", (event) => {
+                        event.preventDefault(); //Used to make sure button doesn't steal focus from textarea and that keyboard doesn't disappear
+                    });
+                    //When user receives message
+                    socket.on("message", (receivedMessage) => {
+                        addTextToScreen(receivedMessage, "remote");
+                    });
+                });
+            });
+        });
+        var disconnectChatButton = document.querySelector("#disconnectChatButton");
+        disconnectChatButton.onclick = () => {
+            hideChatApp();
+        };
+
+        /* UHM no??? We're gonna remove the loader when the time is ready, not let them do it before then, if they don't like it they can leave
+        // When the user clicks on <span> (x), close the modal
+        closeButtonElem.onclick = function() {
+            loadingModalElem.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == loadingModalElem) {
+                loadingModalElem.style.display = "none";
+            }
+        };
+        */
+    </script>
+    <script>
+        var initialPage = document.querySelector("#initialPage");
+        var chatApp = document.querySelector("#chatApp");
+
         //Use socket-io rooms
         //How to send a message
         var message = ""; //Later switch-case for content media and deliver media thru socket to server either text or binary data
