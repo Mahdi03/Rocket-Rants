@@ -37,14 +37,15 @@ app.get("/", (req, res) => {
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-//const io = new Server(server);
+const io = new Server(server);
+/*
 //For CORS try
 const io = require("socket.io")(server, {
     cors: {
         origin: "*",
         methods: ["GET", "POST"]
     }
-});
+});*/
 io.on("connection", (socket) => {
     socket.on("joinRoom", (roomName) => {
         socket.join(roomName);

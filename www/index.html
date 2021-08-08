@@ -236,8 +236,8 @@
             //Show loading sign
             loadingModalElem.style.display = "block";
             //Start socket
-            //var socket = io.connect("https://rocket-rants.herokuapp.com/");
-            var socket = io.connect("localhost:5000");
+            var socket = io.connect("https://rocket-rants.herokuapp.com/");
+            //var socket = io.connect("localhost:5000");
             //While that connects get form data
             var userDataForm = document.forms["userData"];
             var venterOrListener = userDataForm["switch"].value;
