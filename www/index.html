@@ -72,11 +72,11 @@
                     box-shadow: 1px 1px 2px #757575;
                     width: 136px;
                 }
-                
+
                 .switch-container input {
                     display: none;
                 }
-                
+
                 .switch-container .switch-label {
                     position: relative;
                     border-radius: 3px;
@@ -90,12 +90,12 @@
                     transition: all .3s ease-out;
                     cursor: pointer;
                 }
-                
+
                 .switch-container input:checked+.switch-label {
                     color: #fff;
                     font-weight: bolder;
                 }
-                
+
                 .switch-container .switch-selection {
                     position: absolute;
                     width: 60px;
@@ -108,7 +108,7 @@
                     box-shadow: 1px 0px 4px #212121;
                     transition: left 0.2s ease-out;
                 }
-                
+
                 .switch-container input:checked+.off~.switch-selection {
                     box-shadow: -1px 0px 4px #212121;
                     left: 68px;
@@ -127,16 +127,16 @@
             <input class="nonRole" name="screenName" type="text"><br />
             <label for="ageInputMin">Age:</label><br>
             <input class="ageInput nonRole" name="ageInputMin" type="number" placeholder="min">
-            <label for="ageInputMax"> to:</label></nobr>
-            <input class="ageInput ageInput2 nonRole" name="ageInputMax" type="number" placeholder="max"><br><br>
+            <label for="ageInputMax"> to:</label>
+            <input class="ageInput ageInput2 nonRole" name="ageInputMax" type="number" placeholder="max"><br /><br />
             <label for="genderSelect">Gender:</label><br />
             <input list="genderList" id="genderSelect" name="genderSelect" />
             <datalist id="genderList">
-                <option value="Female" />
-                <option value="Male" />
-                <option value="Non-binary" />
-                <option value="Transgender" />
-                <option value="Questioning" />
+                <option value="Female"></option>
+                <option value="Male"></option>
+                <option value="Non-binary"></option>
+                <option value="Transgender"></option>
+                <option value="Questioning"></option>
                 <option value=" ">Or type your own</option>
             </datalist>
             <br /><br />
@@ -156,7 +156,7 @@
             <button type="button" class="start" id="startButton" value="Start Chat">&nbsp;&nbsp;Start Chat&nbsp;&nbsp;</button>
         </form>
         <img id="leftrocket" src="img/big_both_white.png" />
-        
+
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -165,27 +165,57 @@
                 <img id="loadingimg" src="img/rocketloading.svg" style="max-width: 50%;" />
             </div>
         </div>
-        
+
         <script>
             let startButtonElem = document.getElementById("startButton");
             let loadingModalElem = document.getElementById("myModal");
             let closeButtonElem = document.getElementsByClassName("close")[0];
 
-            startButtonElem.onclick = function() {
-                loadingModalElem.style.display = "block";
+            function showChatApp() {
+                //Show chatApp
+                initialPage.style.display = "none";
+                chatApp.classList.remove("hideChat");
+                chatApp.style.zIndex = 20;
+                chatApp.style.display = "flex";
+                chatApp.classList.add("showChat");
             }
+
+            function hideChatApp() {
+                //Hide chatApp
+                chatApp.classList.remove("showChat");
+                chatApp.classList.add("hideChat");
+                setTimeout(() => {
+                    chatApp.style.display = "none";
+                    initialPage.style.display = "block";
+                }, 1000); //In 1s the animation will be over
+                //initialPage.style.display = "block";
+            }
+
+            var initialPage = document.querySelector("#initialPage");
+            var chatApp = document.querySelector("#chatApp");
+            startButtonElem.onclick = function() {
+                //loadingModalElem.style.display = "block";
+                //logic to be put in waiting room, send message back that partner was found
+                //loadingModalElem.style.display = "none";
+                showChatApp();
+
+            };
+            var disconnectChatButton = document.querySelector("#disconnectChatButton");
+            disconnectChatButton.onclick = () => {
+                hideChatApp();
+            };
 
             // When the user clicks on <span> (x), close the modal
             closeButtonElem.onclick = function() {
                 loadingModalElem.style.display = "none";
-            }
+            };
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == loadingModalElem) {
                     loadingModalElem.style.display = "none";
                 }
-            }
+            };
         </script>
     </main>
     <main id="chatApp">
@@ -211,7 +241,7 @@
                 <div id="sendButton" class="start">Send</div>
             </div>
         </div> -->
-        
+
         <section class="msger">
             <header class="messenger-header">
                 <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
@@ -221,10 +251,10 @@
                     <button id="disconnectChatButton" style="float:right;">Leave chat</button>
                 </div>
             </header>
-          
+
             <div id="chatbox">
             </div>
-          
+
             <div id="chatInput" class="msger-inputarea">
                 <!--Main Textbox-->
                 <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
@@ -256,7 +286,7 @@
                 /*
                 //Add the name as a class for the customized colors
                 div.classList.add(name);
-                
+
                 //Add a human readable timestamp along with sender when hovered over
                 div.title = name + ", " + dateSent + ", " + timeSent;
                 //Add content to text bubble accordingly based on what the content is
@@ -287,28 +317,30 @@
             });
         </script>
     </main>
-    <!-- <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener("deviceready", () => {
-            //All JS logic goes in device ready event
-            var socket = io.connect("url to server");
-            //Use socket-io rooms
-            //How to send a message
-            var message = ""; //Later switch-case for content media and deliver media thru socket to server either text or binary data
-            //Be sure to sanitize messages being sent to server
-            socket.emit("message", message); //This is handled in back-end server
-            //Then clean up textbox
-            message = "";
+        var initialPage = document.querySelector("#initialPage");
+        var chatApp = document.querySelector("#chatApp");
 
+        var socket = io.connect("https://rocket-rants.herokuapp.com/");
+        //Use socket-io rooms
+        //How to send a message
+        var message = ""; //Later switch-case for content media and deliver media thru socket to server either text or binary data
+        //Be sure to sanitize messages being sent to server
+        socket.emit("message", message); //This is handled in back-end server
+        //Then clean up textbox
+        message = "";
+        socket.on("time", (timeString) => {
+            console.log(timeString);
+        });
 
-            socket.on("message", (messageFromServer) => {
-                if (!socket.connected) {
-                    //The user is offline now, when the internet works again all socket instances will try to execute buffered up code
-                }
-                //Message received - filter type of message and show it accordingly onto page
-                //Show messageFromServer on page and scroll to bottom
-                //Be sure to sanitize message for 
-            });
+        socket.on("message", (messageFromServer) => {
+            if (!socket.connected) {
+                //The user is offline now, when the internet works again all socket instances will try to execute buffered up code
+            }
+            //Message received - filter type of message and show it accordingly onto page
+            //Show messageFromServer on page and scroll to bottom
+            //Be sure to sanitize message for 
         });
     </script>
     <!-- <script src="cordova.js"></script>

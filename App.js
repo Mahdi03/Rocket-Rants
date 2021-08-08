@@ -45,6 +45,8 @@ io.on("connection", (socket) => {
         //Be sure to sanitize message before sending it out
         io.broadcast.emit("message", messageFromClient); //the broadcast.emit instead of emit sends the message to everyone except the OG sender
     });
+    //Test to see if server can actually communicate back to user
+    setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
     //Get list of rooms: https://stackoverflow.com/questions/6631501/how-to-list-rooms-on-socket-io-nodejs-server
 });
 server.listen(PORT, () => {
