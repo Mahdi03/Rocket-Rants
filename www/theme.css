@@ -104,7 +104,6 @@ p {
 .modal-content {
     border-radius: 4px;
     color: black;
-
     margin: auto;
     padding: 20px;
     width: 80%;
@@ -134,16 +133,16 @@ p {
 
 @keyframes spin {
     0% {
-      transform: rotateZ(0);
+        transform: rotateZ(0);
     }
     100% {
-      transform: rotateZ(360deg);
+        transform: rotateZ(360deg);
     }
-  }
-  
-  #loadingimg {
+}
+
+#loadingimg {
     animation: spin 1.7s linear infinite;
-  }
+}
 
 
 /************************************************For chat.html*****************************************************/
@@ -152,7 +151,36 @@ p {
 /*Main place to display all messages*/
 
 #initialPage {
-    display: none;
+    /*display: none;*/
+}
+
+.showChat {
+    animation: slideInFromRight 1s cubic-bezier(0.02, 1.13, 0.25, 1);
+}
+
+@keyframes slideInFromRight {
+    0% {
+        margin-left: 2000px;
+    }
+    100% {
+        margin-left: 0;
+    }
+}
+
+.hideChat {
+    animation: slideOutTowardsBottom 1s cubic-bezier(0.02, 1.13, 0.25, 1);
+}
+
+@keyframes slideOutTowardsBottom {
+    0% {
+        margin-top: 0;
+        transform: translateY(0px);
+    }
+    100% {
+        margin-top: 5000px;
+        transform: translateY(1000px);
+        /*/display: none;*/
+    }
 }
 
 
@@ -172,7 +200,7 @@ p {
 }
 
 #chatApp {
-    display: flex;
+    display: none;
     flex-direction: column;
 }
 

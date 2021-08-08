@@ -128,16 +128,16 @@
             <input class="nonRole" name="screenName" type="text"><br />
             <label for="ageInputMin">Age:</label><br>
             <input class="ageInput nonRole" name="ageInputMin" type="number" placeholder="min">
-            <label for="ageInputMax"> to:</label></nobr>
-            <input class="ageInput ageInput2 nonRole" name="ageInputMax" type="number" placeholder="max"><br><br>
+            <label for="ageInputMax"> to:</label>
+            <input class="ageInput ageInput2 nonRole" name="ageInputMax" type="number" placeholder="max"><br /><br />
             <label for="genderSelect">Gender:</label><br />
             <input list="genderList" id="genderSelect" name="genderSelect" />
             <datalist id="genderList">
-                <option value="Female" />
-                <option value="Male" />
-                <option value="Non-binary" />
-                <option value="Transgender" />
-                <option value="Questioning" />
+                <option value="Female"></option>
+                <option value="Male"></option>
+                <option value="Non-binary"></option>
+                <option value="Transgender"></option>
+                <option value="Questioning"></option>
                 <option value=" ">Or type your own</option>
             </datalist>
             <br /><br />
@@ -170,27 +170,54 @@
             let loadingModalElem = document.getElementById("myModal");
             let closeButtonElem = document.getElementsByClassName("close")[0];
 
-            startButtonElem.onclick = function() {
-                loadingModalElem.style.display = "block";
+            function showChatApp() {
+                //Show chatApp
+                initialPage.style.display = "none";
+                chatApp.classList.remove("hideChat");
+                chatApp.style.zIndex = 20;
+                chatApp.style.display = "flex";
+                chatApp.classList.add("showChat");
             }
+
+            function hideChatApp() {
+                //Hide chatApp
+                chatApp.classList.remove("showChat");
+                chatApp.classList.add("hideChat");
+                setTimeout(() => {
+                    chatApp.style.display = "none";
+                    initialPage.style.display = "block";
+                }, 1000); //In 1s the animation will be over
+                //initialPage.style.display = "block";
+            }
+
+            var initialPage = document.querySelector("#initialPage");
+            var chatApp = document.querySelector("#chatApp");
+            startButtonElem.onclick = function() {
+                //loadingModalElem.style.display = "block";
+                //logic to be put in waiting room, send message back that partner was found
+                //loadingModalElem.style.display = "none";
+                showChatApp();
+
+            };
+            var disconnectChatButton = document.querySelector("#disconnectChatButton");
+            disconnectChatButton.onclick = () => {
+                hideChatApp();
+            };
 
             // When the user clicks on <span> (x), close the modal
             closeButtonElem.onclick = function() {
                 loadingModalElem.style.display = "none";
-            }
+            };
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == loadingModalElem) {
                     loadingModalElem.style.display = "none";
                 }
-            }
+            };
         </script>
     </main>
     <main id="chatApp">
-        <style>
-
-        </style>
         <div id="chatbox">
             some text
         </div>
@@ -247,6 +274,9 @@
     </main>
     <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
     <script>
+        var initialPage = document.querySelector("#initialPage");
+        var chatApp = document.querySelector("#chatApp");
+
         var socket = io.connect("https://rocket-rants.herokuapp.com/");
         //Use socket-io rooms
         //How to send a message
