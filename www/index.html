@@ -317,6 +317,21 @@
                         addTextToScreen(info, "info");
                     });
                     //Detect whether they want to leave the chat
+
+
+                    let cancelButtonElem = document.getElementById("cancelLoading");
+                    cancelButtonElem.onclick = function(event) {
+                        loadingModalElem.style.display = "none";
+                        socket.emit("leaveChat");
+                    };
+                    /*
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == loadingModalElem) {
+                            loadingModalElem.style.display = "none";
+                        }
+                    };*/
+
                     var disconnectChatButton = document.querySelector("#disconnectChatButton");
                     disconnectChatButton.onclick = () => {
                         socket.emit("info", {
@@ -339,18 +354,6 @@
             });
 
         });
-
-        let cancelButtonElem = document.getElementById("cancelLoading");
-        cancelButtonElem.onclick = function(event) {
-            loadingModalElem.style.display = "none";
-        };
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == loadingModalElem) {
-                loadingModalElem.style.display = "none";
-            }
-        };
     </script>
 </body>
 
