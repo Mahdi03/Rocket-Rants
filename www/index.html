@@ -51,14 +51,13 @@
         <script src="cordova.js"></script>
         <script src="js/index.js"></script>-->
 
-
     <header>
-        <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
-        <p id="tagline">a <i>space</i> of understanding</p>
-        <div id="settingsBar">
+        <h1 id="initialPage" class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
+        <p id="initialPage" class="tagline">a <i>space</i> of understanding</p>
+        <!-- <div id="settingsBar">
             <button id="downloadChatButton">Save chat</button>
             <button id="disconnectChatButton">Leave chat</button>
-        </div>
+        </div> -->
     </header>
     <main id="initialPage">
         <form name="userData">
@@ -156,6 +155,8 @@
             </datalist><br /><br />
             <button type="button" class="start" id="startButton" value="Start Chat">&nbsp;&nbsp;Start Chat&nbsp;&nbsp;</button>
         </form>
+        <img id="leftrocket" src="img/big_both_white.png" />
+
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -164,33 +165,129 @@
                 <img id="loadingimg" src="img/rocketloading.svg" style="max-width: 50%;" />
             </div>
         </div>
-        <img id="leftrocket" src="img/big_both_white.png" />
+
+        <script>
+            let startButtonElem = document.getElementById("startButton");
+            let loadingModalElem = document.getElementById("myModal");
+            let closeButtonElem = document.getElementsByClassName("close")[0];
+
+            function showChatApp() {
+                //Show chatApp
+                initialPage.style.display = "none";
+                chatApp.classList.remove("hideChat");
+                chatApp.style.zIndex = 20;
+                chatApp.style.display = "flex";
+                chatApp.classList.add("showChat");
+            }
+
+            function hideChatApp() {
+                //Hide chatApp
+                chatApp.classList.remove("showChat");
+                chatApp.classList.add("hideChat");
+                setTimeout(() => {
+                    chatApp.style.display = "none";
+                    initialPage.style.display = "block";
+                }, 1000); //In 1s the animation will be over
+                //initialPage.style.display = "block";
+            }
+
+            var initialPage = document.querySelector("#initialPage");
+            var chatApp = document.querySelector("#chatApp");
+            startButtonElem.onclick = function() {
+                //loadingModalElem.style.display = "block";
+                //logic to be put in waiting room, send message back that partner was found
+                //loadingModalElem.style.display = "none";
+                showChatApp();
+
+            };
+            var disconnectChatButton = document.querySelector("#disconnectChatButton");
+            disconnectChatButton.onclick = () => {
+                hideChatApp();
+            };
+
+            // When the user clicks on <span> (x), close the modal
+            closeButtonElem.onclick = function() {
+                loadingModalElem.style.display = "none";
+            };
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == loadingModalElem) {
+                    loadingModalElem.style.display = "none";
+                }
+            };
+        </script>
     </main>
     <main id="chatApp">
-        <div id="chatbox">
-            some text
-        </div>
-        <div id="chatInput">
-            <!--Main Textbox-->
-            <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
-            <!--Send button on right-->
-            <div id="sendButton" class="start">Send</div>
-        </div>
+        <style>
+
+        </style>
+        <!-- <div class="chatContainer">
+            <header>
+                <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
+                <p class="tagline">a <i>space</i> of understanding</p>
+                <div id="settingsBar">
+                    <button id="downloadChatButton">Save chat</button>
+                    <button id="disconnectChatButton">Leave chat</button>
+                </div>
+            </header>
+            <div id="chatbox">
+                some text
+            </div>
+            <div id="chatInput">
+                <!--Main Textbox
+                <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
+                <!--Send button on right
+                <div id="sendButton" class="start">Send</div>
+            </div>
+        </div> -->
+
+        <section class="msger">
+            <header class="messenger-header">
+                <h1 class="pageTitle"><img src="img/small_left_white.png" style="background-color: blue;" alt="" class="pageTitleIcon">&nbsp;<span>Rocket Rants</span></h1>
+                <p class="tagline">a <i>space</i> of understanding</p>
+                <div id="settingsBar">
+                    <button id="downloadChatButton">Save chat</button>
+                    <button id="disconnectChatButton" style="float:right;">Leave chat</button>
+                </div>
+            </header>
+
+            <div id="chatbox">
+            </div>
+
+            <div id="chatInput" class="msger-inputarea">
+                <!--Main Textbox-->
+                <textarea id="inputMessage" rows="2" placeholder="Start typing..."></textarea>
+                <!--Send button on right-->
+                <div id="sendButton" class="start">Send</div>
+            </div>
+        </section>
         <script>
+            let chatInputElem = document.getElementById("inputMessage");
+            chatInputElem.addEventListener("focus", (event) => {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: "smooth"
+                });
+            })
+
             function addTextToScreen(message, localOrRemote) {
                 var chatbox = document.querySelector("#chatbox");
                 var div = document.createElement("div");
                 div.classList.add("text");
+                div.classList.add("msg");
                 //Filter the texts and send them to which side they belong on based on sender
                 if (localOrRemote == "local") {
                     div.classList.add("right");
+                    div.classList.add("right-msg");
                 } else if (localOrRemote == "remote") {
                     div.classList.add("left");
+                    div.classList.add("left-msg");
                 }
                 /*
                 //Add the name as a class for the customized colors
                 div.classList.add(name);
-                
+
                 //Add a human readable timestamp along with sender when hovered over
                 div.title = name + ", " + dateSent + ", " + timeSent;
                 //Add content to text bubble accordingly based on what the content is
