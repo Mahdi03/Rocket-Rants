@@ -26,9 +26,9 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + 'www/index.html');
 });
 
-app.listen(PORT, () => {
+/*app.listen(PORT, () => {
     console.log(`Success, listening on port: ${PORT}`);
-});
+});*/
 
 //////ORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 const http = require('http');
