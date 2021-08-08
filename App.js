@@ -15,7 +15,7 @@ const app = express();
 //Might need if we wanna render HTML?
 app.engine('html', require('ejs').renderFile); //Used to render HTML - npm install html
 app.engine('css', require('ejs').renderFile); //Used to render CSS - npm install css
-app.use(express.static(path.join(__dirname, 'public'))); //Used to find "public" folder outside of folder of this script and serve CSS/JS files
+app.use(express.static(path.join(__dirname, 'www'))); //Used to find "public" folder outside of folder of this script and serve CSS/JS files
 app.use(
     express.urlencoded({
         extended: true
