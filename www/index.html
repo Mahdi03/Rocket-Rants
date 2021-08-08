@@ -162,12 +162,14 @@
         </section>
         <script>
             let radioRoleElem = document.querySelectorAll("roleRadio");
-            let radioRoleVal = radioRoleElem.value;
-            let oppositeRole;
-            if (radioRoleVal = "ranters") oppositeRole = "listener";
-            else oppositeRole = "ranter";
-            let dynamicRole = document.getElementById("oppositeRole");
-            dynamicRole.innerHTML = oppositeRole;
+            radioRoleElem.onchange = () => {
+                let radioRoleVal = radioRoleElem.value;
+                let oppositeRole;
+                if (radioRoleVal = "ranters") oppositeRole = "listener";
+                else oppositeRole = "ranter";
+                let dynamicRole = document.getElementById("oppositeRole");
+                dynamicRole.innerHTML = oppositeRole;
+            };
 
             let chatInputElem = document.getElementById("inputMessage");
             chatInputElem.addEventListener("focus", (event) => {
