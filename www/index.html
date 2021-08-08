@@ -247,28 +247,27 @@
             });
         </script>
     </main>
-    <!-- <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener("deviceready", () => {
-            //All JS logic goes in device ready event
-            var socket = io.connect("url to server");
-            //Use socket-io rooms
-            //How to send a message
-            var message = ""; //Later switch-case for content media and deliver media thru socket to server either text or binary data
-            //Be sure to sanitize messages being sent to server
-            socket.emit("message", message); //This is handled in back-end server
-            //Then clean up textbox
-            message = "";
+        var socket = io.connect("https://rocket-rants.herokuapp.com/");
+        //Use socket-io rooms
+        //How to send a message
+        var message = ""; //Later switch-case for content media and deliver media thru socket to server either text or binary data
+        //Be sure to sanitize messages being sent to server
+        socket.emit("message", message); //This is handled in back-end server
+        //Then clean up textbox
+        message = "";
+        socket.on("time", (timeString) => {
+            console.log(timeString);
+        });
 
-
-            socket.on("message", (messageFromServer) => {
-                if (!socket.connected) {
-                    //The user is offline now, when the internet works again all socket instances will try to execute buffered up code
-                }
-                //Message received - filter type of message and show it accordingly onto page
-                //Show messageFromServer on page and scroll to bottom
-                //Be sure to sanitize message for 
-            });
+        socket.on("message", (messageFromServer) => {
+            if (!socket.connected) {
+                //The user is offline now, when the internet works again all socket instances will try to execute buffered up code
+            }
+            //Message received - filter type of message and show it accordingly onto page
+            //Show messageFromServer on page and scroll to bottom
+            //Be sure to sanitize message for 
         });
     </script>
     <!-- <script src="cordova.js"></script>
