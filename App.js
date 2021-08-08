@@ -38,39 +38,56 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+/*
+//For CORS try
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});*/
 io.on("connection", (socket) => {
     socket.on("joinRoom", (roomName) => {
         socket.join(roomName);
+        console.log("Joined " + roomName);
+        //All the rooms will be defined once they join rooms
+        var rooms = io.sockets.adapter.rooms;
+        var rantingWaitingRoom = rooms.get('waitingRoom-ranters');
+        //console.log(rantingWaitingRoom)
+        //var rantingWaitingRoom = io.sockets.adapter.rooms.get('waitingRoom-ranters'); //Returns a Set() from a Map()
+        var usersInRantingWaitingRoom = [];
+        if (rantingWaitingRoom) {
+            usersInRantingWaitingRoom = Array.from(rantingWaitingRoom);
+        }
+        //console.log(usersInRantingWaitingRoom);
+        var listeningWaitingRoom = rooms.get("waitingRoom-listeners"); //Returns a Set() from a Map()
+        var usersInListeningWaitingRoom = [];
+        if (listeningWaitingRoom) {
+            console.log("is this running??");
+            usersInListeningWaitingRoom = Array.from(listeningWaitingRoom);
+        }
+        while (usersInRantingWaitingRoom.length > 0 && usersInListeningWaitingRoom.length > 0) {
+            var nextInLineRanter = usersInRantingWaitingRoom[0];
+            var nextInLineListener = usersInListeningWaitingRoom[0];
+            //We don't need to pop them from those arrays tho because the next time someone connects, the arrays are recalculated
+            //anyways, and by that time the user here has already left the waiting room and is joining their discussion room
+            //disregard all that, they need to be popped because we are running this function as much as needed in a loop
+            //Get a unique room ID
+            var uniqueRoomID = uuidv4();
+            console.log("hello");
+            io.to(nextInLineRanter).emit("roomFound", uniqueRoomID);
+            io.to(nextInLineListener).emit("roomFound", uniqueRoomID);
+            usersInRantingWaitingRoom.splice(usersInRantingWaitingRoom.indexOf(nextInLineRanter), 1); //Removes nextInLineRanter from arr
+            usersInListeningWaitingRoom.splice(usersInListeningWaitingRoom.indexOf(nextInLineListener), 1) //Removes nextInLineListener from arr
+        }
+
     });
     socket.on("leaveRoom", (roomName) => {
-        socket.join(roomName);
+        socket.leave(roomName);
     });
     console.log("A user has connected");
     //Lets look at users in venting waiting room and users in listening waiting room
     //Get all users in venting waiting room
-    var rantingWaitingRoom = io.sockets.adapter.rooms["waitingRoom-ranters"]; //Returns a Set()
-    var usersInRantingWaitingRoom = [];
-    for (let userID in rantingWaitingRoom.values()) {
-        usersInRantingWaitingRoom.push(userID);
-    }
-    var listeningWaitingRoom = io.sockets.adapter.rooms["waitingRoom-listeners"]; //Returns a Set()
-    var usersInListeningWaitingRoom = [];
-    for (let userID in listeningWaitingRoom.values()) {
-        usersInListeningWaitingRoom.push(userID);
-    }
-    while (usersInRantingWaitingRoom.length > 0 && usersInListeningWaitingRoom.length > 0) {
-        var nextInLineRanter = usersInRantingWaitingRoom[0];
-        var nextInLineListener = usersInListeningWaitingRoom[0];
-        //We don't need to pop them from those arrays tho because the next time someone connects, the arrays are recalculated
-        //anyways, and by that time the user here has already left the waiting room and is joining their discussion room
-        //disregard all that, they need to be popped because we are running this function as much as needed in a loop
-        //Get a unique room ID
-        var uniqueRoomID = uuidv4();
-        nextInLineRanter.emit("roomFound", uniqueRoomID);
-        nextInLineListener.emit("roomFound", uniqueRoomID);
-        usersInRantingWaitingRoom.splice(usersInRantingWaitingRoom.indexOf(nextInLineRanter), 1); //Removes nextInLineRanter from arr
-        usersInListeningWaitingRoom.splice(usersInListeningWaitingRoom.indexOf(nextInLineListener), 1) //Removes nextInLineListener from arr
-    }
     socket.on("disconnect", () => {
         console.log("Oh no the user left, hopefully the conversation was over. If not feel free to find someone else.");
     });
