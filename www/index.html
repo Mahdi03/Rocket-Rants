@@ -12,6 +12,18 @@
 </head>
 
 <body>
+    <div id="splashscreen">
+        <img src="img/splash_screen.png" />
+    </div>
+    <script>
+        setTimeout(() => {
+            //Make image disappear after 2.5 secs
+            document.querySelector("#splashscreen").classList.add("fadeOut");
+            setTimeout(() => {
+                document.querySelector("#splashscreen").style.display = "none";
+            }, 250);
+        }, 2500);
+    </script>
     <!--
         <div class="app">
             <h1>Apache Cordova</h1>
@@ -162,12 +174,14 @@
         </section>
         <script>
             let radioRoleElem = document.querySelectorAll("roleRadio");
-            let radioRoleVal = radioRoleElem.value;
-            let oppositeRole;
-            if (radioRoleVal = "ranters") oppositeRole = "listener";
-            else oppositeRole = "ranter";
-            let dynamicRole = document.getElementById("oppositeRole");
-            dynamicRole.innerHTML = oppositeRole;
+            radioRoleElem.onchange = () => {
+                let radioRoleVal = radioRoleElem.value;
+                let oppositeRole;
+                if (radioRoleVal = "ranters") oppositeRole = "listener";
+                else oppositeRole = "ranter";
+                let dynamicRole = document.getElementById("oppositeRole");
+                dynamicRole.innerHTML = oppositeRole;
+            };
 
             let chatInputElem = document.getElementById("inputMessage");
             chatInputElem.addEventListener("focus", (event) => {
@@ -315,6 +329,21 @@
                         addTextToScreen(info, "info");
                     });
                     //Detect whether they want to leave the chat
+
+
+                    let cancelButtonElem = document.getElementById("cancelLoading");
+                    cancelButtonElem.onclick = function(event) {
+                        loadingModalElem.style.display = "none";
+                        socket.emit("leaveChat");
+                    };
+                    /*
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == loadingModalElem) {
+                            loadingModalElem.style.display = "none";
+                        }
+                    };*/
+
                     var disconnectChatButton = document.querySelector("#disconnectChatButton");
                     disconnectChatButton.onclick = () => {
                         socket.emit("info", {
@@ -337,18 +366,6 @@
             });
 
         });
-
-        let cancelButtonElem = document.getElementById("cancelLoading");
-        cancelButtonElem.onclick = function(event) {
-            loadingModalElem.style.display = "none";
-        };
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == loadingModalElem) {
-                loadingModalElem.style.display = "none";
-            }
-        };
     </script>
 </body>
 
